@@ -1,1 +1,802 @@
+package miniproject;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+//===== BANK MANAGEMENT SYSTEM =====
+
+//1. Create Account
+//2. Deposits Money
+//3. Withdraw Money
+//4. Check Balance
+//5. Transfer Money
+//6. View Account Details
+//7. Transaction History
+//8. Exit
+// ================= ACCOUNT CLASS =================
+
+class Account {
+
+    private int accountNumber;
+    private String holderName;
+    private String accountType;
+    private double balance;
+
+    private ArrayList<String> transactions;
+
+    public Account(int accountNumber, String holderName,
+                   String accountType, double initialBalance) {
+
+        this.accountNumber = accountNumber;
+        this.holderName = holderName;
+        this.accountType = accountType;
+        this.balance = initialBalance;
+
+        transactions = new ArrayList<>();
+
+        transactions.add("Account opened with Rs." + initialBalance);
+    }
+
+    public int getAccountNumber() {
+        return accountNumber;
+    }
+
+    public String getHolderName() {
+        return holderName;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    // ================= DEPOSIT =================
+
+    public void deposit(double amount) {
+
+        if (amount <= 0) {
+            System.out.println("Invalid deposit amount!");
+            return;
+        }
+
+        balance += amount;
+
+        transactions.add("Deposited Rs." + amount);
+
+        System.out.println("Deposit successful!");
+        System.out.println("Current Balance: Rs." + balance);
+    }
+
+    // ================= WITHDRAW =================
+
+    public void withdraw(double amount) {
+
+        if (amount <= 0) {
+            System.out.println("Invalid withdrawal amount!");
+            return;
+        }
+
+        if (amount > balance) {
+            System.out.println("Insufficient balance!");
+            return;
+        }
+
+        balance -= amount;
+
+        transactions.add("Withdrawn Rs." + amount);
+
+        System.out.println("Withdrawal successful!");
+        System.out.println("Current Balance: Rs." + balance);
+    }
+
+    // ================= TRANSACTION HISTORY =================
+
+    public void showTransactions() {
+
+        System.out.println("\n===== TRANSACTION HISTORY =====");
+
+        if (transactions.isEmpty()) {
+            System.out.println("No transactions found.");
+            return;
+        }
+
+        for (String transaction : transactions) {
+            System.out.println("- " + transaction);
+        }
+    }
+
+    // ================= ACCOUNT DETAILS =================
+
+    public void displayAccountDetails() {
+
+        System.out.println("\n===== ACCOUNT DETAILS =====");
+
+        System.out.println("Account Number : " + accountNumber);
+        System.out.println("Holder Name    : " + holderName);
+        System.out.println("Account Type   : " + accountType);
+        System.out.println("Balance        : Rs." + balance);
+    }
+}
+
+
+// ================= BANK CLASS =================
+
+class Bank {
+
+    private ArrayList<Account> accounts;
+
+    private int nextAccountNumber = 1001;
+
+    public Bank() {
+        accounts = new ArrayList<>();
+    }
+
+    // ================= CREATE ACCOUNT =================
+
+    public void createAccount(String name,
+                               String type,
+                               double initialDeposit) {
+
+        if (initialDeposit < 500) {
+
+            System.out.println("Minimum initial deposit is Rs.500.");
+            return;
+        }
+
+        Account account = new Account(
+                nextAccountNumber,
+                name,
+                type,
+                initialDeposit
+        );
+
+        accounts.add(account);
+
+        System.out.println("\n===== ACCOUNT CREATED SUCCESSFULLY =====");
+
+        System.out.println("Account Number : " + nextAccountNumber);
+        System.out.println("Holder Name    : " + name);
+        System.out.println("Account Type   : " + type);
+        System.out.println("Initial Deposit: Rs." + initialDeposit);
+
+        nextAccountNumber++;
+    }
+
+    // ================= FIND ACCOUNT =================
+
+    public Account findAccount(int accountNumber) {
+
+        for (Account account : accounts) {
+
+            if (account.getAccountNumber() == accountNumber) {
+                return account;
+            }
+        }
+
+        return null;
+    }
+
+    // ================= DEPOSIT =================
+
+    public void deposit(int accountNumber, double amount) {
+
+        Account account = findAccount(accountNumber);
+
+        if (account == null) {
+
+            System.out.println("Account not found!");
+            return;
+        }
+
+        account.deposit(amount);
+    }
+
+    // ================= WITHDRAW =================
+
+    public void withdraw(int accountNumber, double amount) {
+
+        Account account = findAccount(accountNumber);
+
+        if (account == null) {
+
+            System.out.println("Account not found!");
+            return;
+        }
+
+        account.withdraw(amount);
+    }
+
+    // ================= CHECK BALANCE =================
+
+    public void checkBalance(int accountNumber) {
+
+        Account account = findAccount(accountNumber);
+
+        if (account == null) {
+
+            System.out.println("Account not found!");
+            return;
+        }
+
+        System.out.println("\n===== ACCOUNT BALANCE =====");
+
+        System.out.println("Account Number : "
+                + account.getAccountNumber());
+
+        System.out.println("Holder Name    : "
+                + account.getHolderName());
+
+        System.out.println("Balance        : Rs."
+                + account.getBalance());
+    }
+
+    // ================= ACCOUNT DETAILS =================
+
+    public void showAccountDetails(int accountNumber) {
+
+        Account account = findAccount(accountNumber);
+
+        if (account == null) {
+
+            System.out.println("Account not found!");
+            return;
+        }
+
+        account.displayAccountDetails();
+    }
+
+    // ================= TRANSFER MONEY =================
+
+    public void transferMoney(int fromAccount,
+                              int toAccount,
+                              double amount) {
+
+        Account sender = findAccount(fromAccount);
+
+        Account receiver = findAccount(toAccount);
+
+        if (sender == null) {
+
+            System.out.println("Sender account not found!");
+            return;
+        }
+
+        if (receiver == null) {
+
+            System.out.println("Receiver account not found!");
+            return;
+        }
+
+        if (fromAccount == toAccount) {
+
+            System.out.println(
+                    "Cannot transfer money to the same account!"
+            );
+
+            return;
+        }
+
+        if (amount <= 0) {
+
+            System.out.println("Invalid transfer amount!");
+            return;
+        }
+
+        if (amount > sender.getBalance()) {
+
+            System.out.println("Insufficient balance!");
+            return;
+        }
+
+        // Withdraw from sender
+        sender.withdraw(amount);
+
+        // Deposit to receiver
+        receiver.deposit(amount);
+
+        System.out.println("\n===== TRANSFER SUCCESSFUL =====");
+
+        System.out.println("From Account : " + fromAccount);
+        System.out.println("To Account   : " + toAccount);
+        System.out.println("Amount       : Rs." + amount);
+    }
+
+    // ================= SHOW ALL ACCOUNTS =================
+
+    public void showAllAccounts() {
+
+        System.out.println("\n========== ALL ACCOUNTS ==========");
+
+        if (accounts.isEmpty()) {
+
+            System.out.println("No accounts available.");
+            return;
+        }
+
+        for (Account account : accounts) {
+
+            System.out.println("--------------------------------");
+
+            System.out.println("Account Number : "
+                    + account.getAccountNumber());
+
+            System.out.println("Holder Name    : "
+                    + account.getHolderName());
+
+            System.out.println("Account Type   : "
+                    + account.getAccountType());
+
+            System.out.println("Balance        : Rs."
+                    + account.getBalance());
+        }
+
+        System.out.println("--------------------------------");
+    }
+
+    // ================= TRANSACTION HISTORY =================
+
+    public void showTransactionHistory(int accountNumber) {
+
+        Account account = findAccount(accountNumber);
+
+        if (account == null) {
+
+            System.out.println("Account not found!");
+            return;
+        }
+
+        account.showTransactions();
+    }
+}
+
+
+// ================= MAIN CLASS =================
+
+public class Miniproject {
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        Bank bank = new Bank();
+
+        int choice = 0;
+
+        System.out.println("======================================");
+        System.out.println("       WELCOME TO JAVA BANK");
+        System.out.println("======================================");
+
+        do {
+
+            System.out.println("\n========== BANK MANAGEMENT SYSTEM ==========");
+
+            System.out.println("1. Create Account");
+            System.out.println("2. Deposit Money");
+            System.out.println("3. Withdraw Money");
+            System.out.println("4. Check Balance");
+            System.out.println("5. Transfer Money");
+            System.out.println("6. View Account Details");
+            System.out.println("7. Transaction History");
+            System.out.println("8. View All Accounts");
+            System.out.println("9. Exit");
+
+            System.out.println("============================================");
+
+            System.out.print("Enter your choice: ");
+
+            try {
+
+                choice = scanner.nextInt();
+
+                switch (choice) {
+
+                    // ================= CREATE ACCOUNT =================
+
+                    case 1:
+
+                        scanner.nextLine();
+
+                        System.out.print(
+                                "Enter Account Holder Name: "
+                        );
+
+                        String name = scanner.nextLine();
+
+                        System.out.print(
+                                "Enter Account Type (Savings/Current): "
+                        );
+
+                        String type = scanner.nextLine();
+
+                        System.out.print(
+                                "Enter Initial Deposit: Rs."
+                        );
+
+                        double initialDeposit = scanner.nextDouble();
+
+                        bank.createAccount(
+                                name,
+                                type,
+                                initialDeposit
+                        );
+
+                        break;
+
+
+                    // ================= DEPOSIT =================
+
+                    case 2:
+
+                        System.out.print(
+                                "Enter Account Number: "
+                        );
+
+                        int depositAccount = scanner.nextInt();
+
+                        System.out.print(
+                                "Enter Deposit Amount: Rs."
+                        );
+
+                        double depositAmount = scanner.nextDouble();
+
+                        bank.deposit(
+                                depositAccount,
+                                depositAmount
+                        );
+
+                        break;
+
+
+                    // ================= WITHDRAW =================
+
+                    case 3:
+
+                        System.out.print(
+                                "Enter Account Number: "
+                        );
+
+                        int withdrawAccount = scanner.nextInt();
+
+                        System.out.print(
+                                "Enter Withdrawal Amount: Rs."
+                        );
+
+                        double withdrawAmount = scanner.nextDouble();
+
+                        // FIXED
+                        bank.withdraw(
+                                withdrawAccount,
+                                withdrawAmount
+                        );
+
+                        break;
+
+
+                    // ================= BALANCE =================
+
+                    case 4:
+
+                        System.out.print(
+                                "Enter Account Number: "
+                        );
+
+                        int balanceAccount = scanner.nextInt();
+
+                        bank.checkBalance(balanceAccount);
+
+                        break;
+
+
+                    // ================= TRANSFER =================
+
+                    case 5:
+
+                        System.out.print(
+                                "Enter Sender Account Number: "
+                        );
+
+                        int sender = scanner.nextInt();
+
+                        System.out.print(
+                                "Enter Receiver Account Number: "
+                        );
+
+                        int receiver = scanner.nextInt();
+
+                        System.out.print(
+                                "Enter Transfer Amount: Rs."
+                        );
+
+                        double transferAmount = scanner.nextDouble();
+
+                        bank.transferMoney(
+                                sender,
+                                receiver,
+                                transferAmount
+                        );
+
+                        break;
+
+
+                    // ================= ACCOUNT DETAILS =================
+
+                    case 6:
+
+                        System.out.print(
+                                "Enter Account Number: "
+                        );
+
+                        int detailsAccount = scanner.nextInt();
+
+                        bank.showAccountDetails(
+                                detailsAccount
+                        );
+
+                        break;
+
+
+                    // ================= TRANSACTION HISTORY =================
+
+                    case 7:
+
+                        System.out.print(
+                                "Enter Account Number: "
+                        );
+
+                        int transactionAccount = scanner.nextInt();
+
+                        bank.showTransactionHistory(
+                                transactionAccount
+                        );
+
+                        break;
+
+
+                    // ================= ALL ACCOUNTS =================
+
+                    case 8:
+
+                        bank.showAllAccounts();
+
+                        break;
+
+
+                    // ================= EXIT =================
+
+                    case 9:
+
+                        System.out.println(
+                                "\nThank you for using Java Bank!"
+                        );
+
+                        System.out.println(
+                                "Have a nice day!"
+                        );
+
+                        break;
+
+
+                    default:
+
+                        System.out.println(
+                                "Invalid choice! Please try again."
+                        );
+                }
+
+            } catch (Exception e) {
+
+                System.out.println(
+                        "Invalid input! Please enter valid data."
+                );
+
+                scanner.nextLine();
+
+                choice = 0;
+            }
+
+        } while (choice != 9);
+
+        scanner.close();
+    }
+
+(OUTPUT)=>======================================
+       WELCOME TO JAVA BANK
+======================================
+
+========== BANK MANAGEMENT SYSTEM ==========
+1. Create Account
+2. Deposit Money
+3. Withdraw Money
+4. Check Balance
+5. Transfer Money
+6. View Account Details
+7. Transaction History
+8. View All Accounts
+9. Exit
+============================================
+Enter your choice: 1
+Enter Account Holder Name: ranjith
+Enter Account Type (Savings/Current): saving
+Enter Initial Deposit: Rs.2000
+
+===== ACCOUNT CREATED SUCCESSFULLY =====
+Account Number : 1001
+Holder Name    : ranjith
+Account Type   : saving
+Initial Deposit: Rs.2000.0
+
+========== BANK MANAGEMENT SYSTEM ==========
+1. Create Account
+2. Deposit Money
+3. Withdraw Money
+4. Check Balance
+5. Transfer Money
+6. View Account Details
+7. Transaction History
+8. View All Accounts
+9. Exit
+============================================
+Enter your choice: 2
+Enter Account Number: 1001
+Enter Deposit Amount: Rs.2000
+Deposit successful!
+Current Balance: Rs.4000.0
+
+========== BANK MANAGEMENT SYSTEM ==========
+1. Create Account
+2. Deposit Money
+3. Withdraw Money
+4. Check Balance
+5. Transfer Money
+6. View Account Details
+7. Transaction History
+8. View All Accounts
+9. Exit
+============================================
+Enter your choice: 3
+Enter Account Number: 1001
+Enter Withdrawal Amount: Rs.2000
+Withdrawal successful!
+Current Balance: Rs.2000.0
+
+========== BANK MANAGEMENT SYSTEM ==========
+1. Create Account
+2. Deposit Money
+3. Withdraw Money
+4. Check Balance
+5. Transfer Money
+6. View Account Details
+7. Transaction History
+8. View All Accounts
+9. Exit
+============================================
+Enter your choice: 4
+Enter Account Number: 1001
+
+===== ACCOUNT BALANCE =====
+Account Number : 1001
+Holder Name    : ranjith
+Balance        : Rs.2000.0
+
+========== BANK MANAGEMENT SYSTEM ==========
+1. Create Account
+2. Deposit Money
+3. Withdraw Money
+4. Check Balance
+5. Transfer Money
+6. View Account Details
+7. Transaction History
+8. View All Accounts
+9. Exit
+============================================
+Enter your choice: 5
+Enter Sender Account Number: 1002
+Enter Receiver Account Number: 
+
+1003
+Enter Transfer Amount: Rs.2000
+Sender account not found!
+
+========== BANK MANAGEMENT SYSTEM ==========
+1. Create Account
+2. Deposit Money
+3. Withdraw Money
+4. Check Balance
+5. Transfer Money
+6. View Account Details
+7. Transaction History
+8. View All Accounts
+9. Exit
+============================================
+Enter your choice: 5
+Enter Sender Account Number: 1001
+Enter Receiver Account Number: 1002
+Enter Transfer Amount: Rs.500
+Receiver account not found!
+
+========== BANK MANAGEMENT SYSTEM ==========
+1. Create Account
+2. Deposit Money
+3. Withdraw Money
+4. Check Balance
+5. Transfer Money
+6. View Account Details
+7. Transaction History
+8. View All Accounts
+9. Exit
+============================================
+Enter your choice: 1
+Enter Account Holder Name: ramu
+Enter Account Type (Savings/Current): saving
+Enter Initial Deposit: Rs.4000
+
+===== ACCOUNT CREATED SUCCESSFULLY =====
+Account Number : 1002
+Holder Name    : ramu
+Account Type   : saving
+Initial Deposit: Rs.4000.0
+
+========== BANK MANAGEMENT SYSTEM ==========
+1. Create Account
+2. Deposit Money
+3. Withdraw Money
+4. Check Balance
+5. Transfer Money
+6. View Account Details
+7. Transaction History
+8. View All Accounts
+9. Exit
+============================================
+Enter your choice: 5
+Enter Sender Account Number: 1001
+Enter Receiver Account Number: 1002
+Enter Transfer Amount: Rs.500
+Withdrawal successful!
+Current Balance: Rs.1500.0
+Deposit successful!
+Current Balance: Rs.4500.0
+
+===== TRANSFER SUCCESSFUL =====
+From Account : 1001
+To Account   : 1002
+Amount       : Rs.500.0
+
+========== BANK MANAGEMENT SYSTEM ==========
+1. Create Account
+2. Deposit Money
+3. Withdraw Money
+4. Check Balance
+5. Transfer Money
+6. View Account Details
+7. Transaction History
+8. View All Accounts
+9. Exit
+============================================
+Enter your choice: 6
+Enter Account Number: 1001
+
+===== ACCOUNT DETAILS =====
+Account Number : 1001
+Holder Name    : ranjith
+Account Type   : saving
+Balance        : Rs.1500.0
+
+========== BANK MANAGEMENT SYSTEM ==========
+1. Create Account
+2. Deposit Money
+3. Withdraw Money
+4. Check Balance
+5. Transfer Money
+6. View Account Details
+7. Transaction History
+8. View All Accounts
+9. Exit
+============================================
+Enter your choice: 9
+
+Thank you for using Java Bank!
+Have a nice day!.
+
+}
