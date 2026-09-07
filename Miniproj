@@ -800,3 +800,870 @@ Thank you for using Java Bank!
 Have a nice day!.
 
 }
+
+....................DashBoard..................
+package textiles;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class Dashboard implements ActionListener {
+
+    JFrame frame;
+
+    JButton logoutButton;
+
+    String userName;
+
+    public Dashboard(String userName) {
+
+        this.userName = userName;
+
+        frame = new JFrame(
+                "Global Banking Management System - Dashboard"
+        );
+
+        frame.setSize(1100, 700);
+
+        frame.setLayout(null);
+
+        frame.setLocationRelativeTo(null);
+
+        // HEADER
+
+        JPanel header = new JPanel();
+
+        header.setBounds(
+                0, 0, 1100, 100
+        );
+
+        header.setLayout(null);
+
+        header.setBackground(
+                new Color(100, 30, 40)
+        );
+
+        frame.add(header);
+
+        // LOGO / TITLE
+
+        JLabel title =
+                new JLabel("🏦 Global Banking Management System ");
+
+        title.setBounds(
+                40, 20, 400, 40
+        );
+
+        title.setFont(
+                new Font("Serif", Font.BOLD, 30)
+        );
+
+        title.setForeground(Color.yellow);
+
+        header.add(title);
+
+        // USER
+
+        JLabel user =
+                new JLabel("Welcome, " + userName);
+
+        user.setBounds(
+                750, 25, 250, 30
+        );
+
+        user.setFont(
+                new Font("Arial", Font.BOLD, 16)
+        );
+
+        user.setForeground(Color.gray);
+
+        header.add(user);
+
+        // MAIN TITLE
+
+        JLabel dashboardTitle =
+                new JLabel("GLOBAL BANKING MANAGEMENT DASHBOARD");
+
+        dashboardTitle.setBounds(
+                350, 130, 500, 40
+        );
+
+        dashboardTitle.setFont(
+                new Font("Arial", Font.BOLD, 24)
+        );
+
+        dashboardTitle.setForeground(
+                new Color(100, 30, 40)
+        );
+
+        frame.add(dashboardTitle);
+     // CARD 1
+
+        createCard(
+                "👤",
+                "profile",
+                "10000",
+                10000
+                
+        		);
+     // CARD 2
+
+        createCard(
+                "💰",
+                "Check Balance",
+                "100000",
+                100000
+                
+                
+                
+        );
+        
+                
+      // CARD 3
+
+        createCard(
+                "💵",
+                "Cash Deposit",
+                "100000",
+                100000
+                
+                
+                
+        );
+
+        // CARD 4
+
+        createCard(
+                "➖",
+                "with Draw",
+                "20,000",
+                20000
+                
+        );
+
+        // CARD 5
+
+        createCard(
+                "💰",
+                "Cheque",
+                "50,000",
+                50000
+                
+                
+        );
+     // CARD 6
+
+        createCard(
+                "📜",
+                "Transfer Money",
+                "50,0000",
+                500000
+                
+                
+        );
+        
+        // CARD 7
+
+        createCard(
+                "🚪",
+                "Log Out",
+                "50,0000",
+                500000
+                
+                
+        );
+        
+        JLabel collection =
+                new JLabel("Global Banking Management System");
+
+        collection.setBounds(
+                400, 410, 350, 35
+        );
+
+        collection.setFont(
+                new Font("Serif", Font.BOLD, 22)
+        );
+
+        collection.setForeground(
+                new Color(100, 30, 40)
+        );
+
+        frame.add(collection);
+
+        JLabel categories =
+                new JLabel(
+                     "Deposit   |   Withdrawal  |   Transfer   |   Transaction ID| Date & Time | Amount | Balance after transaction "
+                		);
+
+        categories.setBounds(
+                250, 460, 650, 35
+        );
+
+        categories.setFont(
+                new Font("Arial", Font.BOLD, 16)
+        );
+
+        categories.setForeground(
+                new Color(100, 80, 60)
+        );
+
+        frame.add(categories);
+
+        // LOGOUT
+
+        logoutButton =
+                new JButton("LOGOUT");
+
+        logoutButton.setBounds(
+                450, 550, 180, 45
+        );
+
+        logoutButton.setFont(
+                new Font("Arial", Font.BOLD, 15)
+        );
+
+        logoutButton.setBackground(
+                new Color(100, 30, 40)
+        );
+
+        logoutButton.setForeground(Color.WHITE);
+
+        logoutButton.setFocusPainted(false);
+
+        logoutButton.addActionListener(this);
+
+        frame.add(logoutButton);
+
+        frame.setDefaultCloseOperation(
+                JFrame.EXIT_ON_CLOSE
+        );
+
+        frame.setVisible(true);
+    }
+
+    private void createCard(
+            String icon,
+            String title,
+            String value,
+            int x
+    ) {
+
+        JPanel card = new JPanel();
+
+        card.setLayout(null);
+
+        card.setBounds(
+                x, 200, 250, 160
+        );
+
+        card.setBackground(
+                new Color(255, 248, 235)
+        );
+
+        frame.add(card);
+
+        JLabel iconLabel =
+                new JLabel(icon);
+
+        iconLabel.setBounds(
+                95, 10, 60, 40
+        );
+
+        iconLabel.setFont(
+                new Font("Arial", Font.PLAIN, 30)
+        );
+
+        card.add(iconLabel);
+
+        JLabel titleLabel =
+                new JLabel(title);
+
+        titleLabel.setBounds(
+                75, 55, 120, 25
+        );
+
+        titleLabel.setFont(
+                new Font("Arial", Font.BOLD, 15)
+        );
+
+        titleLabel.setForeground(
+                new Color(100, 30, 40)
+        );
+
+        card.add(titleLabel);
+
+        JLabel valueLabel =
+                new JLabel(value);
+
+        valueLabel.setBounds(
+                70, 90, 150, 40
+        );
+
+        valueLabel.setFont(
+                new Font("Arial", Font.BOLD, 25)
+        );
+
+        card.add(valueLabel);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource() == logoutButton) {
+
+            frame.dispose();
+
+            new Login();
+        }
+    }
+}
+
+.............DB Connection.....................
+
+package textiles;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class DBConnection {
+
+    public static Connection getConnection() {
+
+        Connection con = null;
+
+        try {
+
+//            Class.forName("/");
+
+            con = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/textiles_db",
+                    "root",
+                    "root"
+            );
+
+            System.out.println("Connected to MySQL!");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return con;
+    }
+}
+
+....................Login..................
+package textiles;
+
+ 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+public class Login implements ActionListener {
+
+    JFrame frame;
+
+    JTextField usernameText;
+    JPasswordField passwordText;
+
+    JButton loginButton;
+    JButton registerButton;
+
+    public Login() {
+
+        frame = new JFrame("Global Banking Management System");
+
+        frame.setSize(800, 800);
+        frame.setLayout(null);
+        frame.setLocationRelativeTo(null);
+
+        frame.getContentPane().setBackground(
+                new Color(245, 235, 220)
+        );
+
+        // TITLE
+
+        JLabel title = new JLabel("Global Banking Saving Account");
+
+        title.setBounds(175, 50, 300, 50);
+
+        title.setFont(
+                new Font("Serif", Font.BOLD, 32)
+        );
+
+        title.setForeground(
+                new Color(100, 30, 40)
+        );
+
+        frame.add(title);
+
+        JLabel welcome = new JLabel("Welcome Back!");
+
+        welcome.setBounds(220, 105, 200, 30);
+
+        welcome.setFont(
+                new Font("Arial", Font.BOLD, 18)
+        );
+
+        frame.add(welcome);
+
+        // USERNAME
+
+        JLabel usernameLabel = new JLabel("Username");
+
+        usernameLabel.setBounds(100, 180, 150, 30);
+
+        usernameLabel.setFont(
+                new Font("Arial", Font.BOLD, 16)
+        );
+
+        frame.add(usernameLabel);
+
+        usernameText = new JTextField();
+
+        usernameText.setBounds(
+                250, 180, 250, 35
+        );
+
+        frame.add(usernameText);
+
+        // PASSWORD
+
+        JLabel passwordLabel = new JLabel("Password");
+
+        passwordLabel.setBounds(100, 240, 150, 30);
+
+        passwordLabel.setFont(
+                new Font("Arial", Font.BOLD, 16)
+        );
+
+        frame.add(passwordLabel);
+
+        passwordText = new JPasswordField();
+
+        passwordText.setBounds(
+                250, 240, 250, 35
+        );
+
+        frame.add(passwordText);
+
+        // LOGIN BUTTON
+
+        loginButton = new JButton("LOGIN");
+
+        loginButton.setBounds(
+                200, 320, 200, 45
+        );
+
+        loginButton.setFont(
+                new Font("Arial", Font.BOLD, 16)
+        );
+
+        loginButton.setBackground(
+                new Color(100, 30, 40)
+        );
+
+        loginButton.setForeground(Color.yellow);
+
+        loginButton.setFocusPainted(false);
+
+        loginButton.addActionListener(this);
+
+        frame.add(loginButton);
+
+        // REGISTER BUTTON
+
+        registerButton =
+                new JButton("New User? REGISTER");
+
+        registerButton.setBounds(
+                180, 400, 240, 35
+        );
+
+        registerButton.setBorderPainted(false);
+
+        registerButton.setContentAreaFilled(false);
+
+        registerButton.setFont(
+                new Font("Arial", Font.PLAIN, 14)
+        );
+
+        registerButton.addActionListener(this);
+
+        frame.add(registerButton);
+
+        frame.setDefaultCloseOperation(
+                JFrame.EXIT_ON_CLOSE
+        );
+
+        frame.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource() == loginButton) {
+
+            String username =
+                    usernameText.getText().trim();
+
+            String password =
+                    new String(
+                            passwordText.getPassword()
+                    ).trim();
+
+            if (username.isEmpty() ||
+                password.isEmpty()) {
+
+                JOptionPane.showMessageDialog(
+                        frame,
+                        "Please enter username and password!"
+                );
+
+                return;
+            }
+
+            String sql =
+                    "SELECT name FROM users "
+                    + "WHERE username = ? AND password = ?";
+
+            try {
+
+                Connection con =
+                        DBConnection.getConnection();
+
+                PreparedStatement ps =
+                        con.prepareStatement(sql);
+
+                ps.setString(1, username);
+                ps.setString(2, password);
+
+                ResultSet rs =
+                        ps.executeQuery();
+
+                if (rs.next()) {
+
+                    String name =
+                            rs.getString("name");
+
+                    JOptionPane.showMessageDialog(
+                            frame,
+                            "Login Successful!"
+                    );
+
+                    frame.dispose();
+
+                    new Dashboard(name);
+
+                } else {
+
+                    JOptionPane.showMessageDialog(
+                            frame,
+                            "Invalid Username or Password!"
+                    );
+                }
+
+                rs.close();
+                ps.close();
+                con.close();
+
+            } catch (Exception ex) {
+
+                JOptionPane.showMessageDialog(
+                        frame,
+                        "Database Error!\n"
+                        + ex.getMessage()
+                );
+
+                ex.printStackTrace();
+            }
+        }
+
+        // REGISTER
+
+        if (e.getSource() == registerButton) {
+
+            frame.dispose();
+
+            new Register();
+        }
+    }
+
+    public static void main(String[] args) {
+
+        new Login();
+    }
+}
+.....................Register..........................
+package textiles;
+
+ 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+public class Register implements ActionListener {
+
+    JFrame frame;
+
+    JLabel title;
+    JLabel nameLabel;
+    JLabel usernameLabel;
+    JLabel passwordLabel;
+    JLabel phoneLabel;
+
+    JTextField nameText;
+    JTextField usernameText;
+    JTextField phoneText;
+
+    JPasswordField passwordText;
+
+    JButton registerButton;
+    JButton loginButton;
+
+    public Register() {
+
+        frame = new JFrame("Banking Management System");
+
+        frame.setSize(600, 650);
+        ImageIcon icon=new ImageIcon("C:\\Users\\Administrator\\Downloads\\taylor-r-clkI9_xcuis-unsplash.jpg");
+        JLabel bglabel=new JLabel(icon);
+        frame.setContentPane(bglabel);
+        bglabel.setBounds(0, 0, 800, 500);
+
+         frame.setLayout(null);
+        frame.setLocationRelativeTo(null);
+        frame.getContentPane().setBackground(new Color(245, 250, 220));
+
+        // TITLE
+
+        title = new JLabel("Banking System");
+        title.setBounds(170, 40, 300, 50);
+        title.setFont(new Font("Serif", Font.BOLD, 30));
+        title.setForeground(new Color(100, 30, 40));
+
+        frame.add(title);
+
+        JLabel subTitle = new JLabel("Create Your Account");
+        subTitle.setBounds(190, 90, 250, 30);
+        subTitle.setFont(new Font("Arial", Font.BOLD, 18));
+
+        frame.add(subTitle);
+
+        // NAME
+
+        nameLabel = new JLabel("Name");
+        nameLabel.setBounds(100, 150, 150, 30);
+        nameLabel.setFont(new Font("Arial", Font.BOLD, 16));
+
+        frame.add(nameLabel);
+
+        nameText = new JTextField();
+        nameText.setBounds(250, 150, 250, 35);
+
+        frame.add(nameText);
+
+        // USERNAME
+
+        usernameLabel = new JLabel("Username");
+        usernameLabel.setBounds(100, 210, 150, 30);
+        usernameLabel.setFont(new Font("Arial", Font.BOLD, 16));
+
+        frame.add(usernameLabel);
+
+        usernameText = new JTextField();
+        usernameText.setBounds(250, 210, 250, 35);
+
+        frame.add(usernameText);
+
+        // PASSWORD
+
+        passwordLabel = new JLabel("Password");
+        passwordLabel.setBounds(100, 270, 150, 30);
+        passwordLabel.setFont(new Font("Arial", Font.BOLD, 16));
+
+        frame.add(passwordLabel);
+
+        passwordText = new JPasswordField();
+        passwordText.setBounds(250, 270, 250, 35);
+
+        frame.add(passwordText);
+
+        // PHONE
+
+        phoneLabel = new JLabel("Phone");
+        phoneLabel.setBounds(100, 330, 150, 30);
+        phoneLabel.setFont(new Font("Arial", Font.BOLD, 16));
+
+        frame.add(phoneLabel);
+
+        phoneText = new JTextField();
+        phoneText.setBounds(250, 330, 250, 35);
+
+        frame.add(phoneText);
+
+        // REGISTER BUTTON
+
+        registerButton = new JButton("REGISTER");
+
+        registerButton.setBounds(200, 400, 200, 45);
+
+        registerButton.setFont(
+                new Font("Arial", Font.BOLD, 16)
+        );
+
+        registerButton.setBackground(
+                new Color(100, 30, 40)
+        );
+
+        registerButton.setForeground(Color.GREEN);
+
+        registerButton.setFocusPainted(false);
+
+        registerButton.addActionListener(this);
+
+        frame.add(registerButton);
+
+        // LOGIN BUTTON
+
+        loginButton = new JButton("Already have an account? LOGIN");
+
+        loginButton.setBounds(160, 470, 280, 35);
+
+        loginButton.setFont(
+                new Font("Arial", Font.PLAIN, 14)
+        );
+
+        loginButton.setBorderPainted(false);
+        loginButton.setContentAreaFilled(false);
+
+        loginButton.addActionListener(this);
+
+        frame.add(loginButton);
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        frame.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource() == registerButton) {
+
+            String name = nameText.getText().trim();
+            String username = usernameText.getText().trim();
+
+            String password =
+                    new String(passwordText.getPassword()).trim();
+
+            String phone = phoneText.getText().trim();
+
+            // VALIDATION
+
+            if (name.isEmpty() ||
+                username.isEmpty() ||
+                password.isEmpty() ||
+                phone.isEmpty()) {
+
+                JOptionPane.showMessageDialog(
+                        frame,
+                        "Please fill all fields!"
+                );
+
+                return;
+            }
+
+            // DATABASE INSERT
+
+            String sql =
+                    "INSERT INTO users(name, username, password, phone) "
+                    + "VALUES (?, ?, ?, ?)";
+
+            try {
+
+                Connection con =
+                        DBConnection.getConnection();
+
+                PreparedStatement ps =
+                        con.prepareStatement(sql);
+
+                ps.setString(1, name);
+                ps.setString(2, username);
+                ps.setString(3, password);
+                ps.setString(4, phone);
+
+                int result = ps.executeUpdate();
+
+                if (result > 0) {
+
+                    JOptionPane.showMessageDialog(
+                            frame,
+                            "Registration Successful!"
+                    );
+
+                    frame.dispose();
+
+                    new Login();
+                }
+
+                ps.close();
+                con.close();
+
+            } catch (Exception ex) {
+
+                JOptionPane.showMessageDialog(
+                        frame,
+                        "Registration Failed!\n"
+                        + ex.getMessage()
+                );
+
+                ex.printStackTrace();
+            }
+        }
+
+        // LOGIN PAGE
+
+        if (e.getSource() == loginButton) {
+
+            frame.dispose();
+
+            new Login();
+        }
+    }
+
+    public static void main(String[] args) {
+
+        new Register();
+    }
+}
+......................................................
